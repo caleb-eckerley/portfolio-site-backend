@@ -8,15 +8,34 @@ const { mongoClient, serverApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
 const { connectDB } = require("./config/databaseConnect");
 
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
+
+const { eventLogger, logger } = require("./middleware/eventLogger");
+const errorLogger = require("./middleware/errorLogger");
+
 const PORT = process.env.OUT_PORT;
+
+/* ------End imports------ */
 
 connectDB();
 
-/* ------End imports------ */
+app.use(eventLogger);
+app.use(cors(corsOptions));
+app.use(express.json());
 
 app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/landing"));
+
+app.all("*", (req, res) => {
+  res.status(404);
+  if (req.accepts("json")) {
+    res.json({ message: "404 Not Found" });
+  } else {
+    res.type("text").send("404 Not Found");
+  }
+});
 
 mongoose.connection.once("open", function () {
   console.log("connected to MongoDB");
@@ -26,6 +45,11 @@ mongoose.connection.once("open", function () {
   });
 });
 
+app.use(errorLogger);
+
 mongoose.connection.on("error", function (err) {
-  console.log(err);
+  logger(
+    `${err.errno}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    process.env.MONGO_ERROR_LOG_FILENAME
+  );
 });
