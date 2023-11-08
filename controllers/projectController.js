@@ -1,0 +1,26 @@
+const Project = require("../models/Project");
+const Chip = require("../models/Chip");
+const asyncHandler = require("express-async-handler");
+
+/**
+ * @Desc Get all projects
+ * @Route Get /projects
+ * @Access Private
+ **/
+
+const getAllProjects = asyncHandler(async (req, res) => {
+  const projects = await Project.find({})
+    .select(["_id", "title", "desc", "link", "date", "chip"])
+    .populate("chip")
+    .lean();
+  console.log(projects);
+
+  if (!projects?.length) {
+    return res.status(400).json({ message: "No projects found" });
+  }
+  res.json(projects);
+});
+
+module.exports = {
+  getAllProjects,
+};

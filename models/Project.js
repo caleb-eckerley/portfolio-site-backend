@@ -1,27 +1,34 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
+const Types = require("mongoose").Schema.Types;
 
 //Define Project collection schema
-const project_S = new Schema(
+const project_S = new mongoose.Schema(
   {
     title: {
-      type: Schema.Types.String,
+      type: Types.String,
       required: true,
     },
-    description: {
-      type: Schema.Types.String,
+    desc: {
+      type: Types.String,
       required: true,
     },
     link: {
-      type: [project_S],
+      type: [Types.ObjectId],
       required: false,
+      ref: "Project",
     },
     date: {
-      type: Schema.Types.Date,
-      required: true,
+      type: Types.Date,
+      required: false,
       default: new Date(),
     },
+    chip: {
+      type: [Types.ObjectId],
+      required: false,
+      ref: "Chip",
+    },
   },
-  { timestamps: true }
+  { timestamps: true, collection: "project" }
 );
 
-export default model("Project", project_S);
+module.exports = mongoose.model("Project", project_S);

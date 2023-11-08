@@ -28,6 +28,8 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routes/landing"));
 
+app.use("/projects", require("./routes/projectRoutes.js"));
+
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("json")) {
@@ -37,7 +39,7 @@ app.all("*", (req, res) => {
   }
 });
 
-mongoose.connection.once("open", function () {
+mongoose.connection.once("open", () => {
   console.log("connected to MongoDB");
   app.listen(PORT, (err) => {
     if (err) console.log(err);

@@ -1,22 +1,23 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
+const Types = require("mongoose").Schema.Types;
 
-const chip_S = new Schema(
+const chip_S = new mongoose.Schema(
   {
     name: {
-      type: Schema.Types.String,
+      type: Types.String,
       required: true,
     },
     category: {
-      type: Schema.Types.String,
+      type: Types.String,
       required: true,
     },
     color_code: {
-      type: Schema.Types.Number,
-      required: true,
+      type: Types.Number,
+      required: false,
       default: 1,
     },
   },
-  { timestamps: true }
+  { timestamps: true, collection: "chip" }
 );
 
-module.exports = model("Chip", chip_S);
+module.exports = mongoose.model("Chip", chip_S);
