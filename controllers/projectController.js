@@ -9,11 +9,7 @@ const asyncHandler = require("express-async-handler");
  **/
 
 const getAllProjects = asyncHandler(async (req, res) => {
-  const projects = await Project.find({})
-    .select(["_id", "title", "desc", "link", "date", "chip"])
-    .populate("chip")
-    .lean();
-  console.log(projects);
+  const projects = await Project.find({}).select(["_id", "title", "desc", "link", "date", "chip"]).populate("chip").lean();
 
   if (!projects?.length) {
     return res.status(400).json({ message: "No projects found" });
@@ -22,5 +18,5 @@ const getAllProjects = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getAllProjects,
+  getAllProjects
 };
