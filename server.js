@@ -30,6 +30,8 @@ app.use("/", require("./routes/landing"));
 
 app.use("/projects", require("./routes/projectRoutes.js"));
 
+app.use("/chips", require("./routes/chipRoutes.js"));
+
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("json")) {
@@ -50,8 +52,5 @@ mongoose.connection.once("open", () => {
 app.use(errorLogger);
 
 mongoose.connection.on("error", function (err) {
-  logger(
-    `${err.errno}: ${err.code}\t${err.syscall}\t${err.hostname}`,
-    process.env.MONGO_ERROR_LOG_FILENAME
-  );
+  logger(`${err.errno}: ${err.code}\t${err.syscall}\t${err.hostname}`, process.env.MONGO_ERROR_LOG_FILENAME);
 });

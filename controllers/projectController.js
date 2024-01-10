@@ -1,5 +1,4 @@
 const Project = require("../models/Project");
-const Chip = require("../models/Chip");
 const asyncHandler = require("express-async-handler");
 
 /**

@@ -5,17 +5,12 @@ const chip_S = new mongoose.Schema(
   {
     name: {
       type: Types.String,
-      required: true,
+      required: true
     },
-    category: {
+    type: {
       type: Types.String,
-      required: true,
-    },
-    color_code: {
-      type: Types.Number,
-      required: false,
-      default: 1,
-    },
+      required: true
+    }
   },
   { timestamps: true, collection: "chip" }
 );
