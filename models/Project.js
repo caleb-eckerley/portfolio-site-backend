@@ -6,27 +6,32 @@ const project_S = new mongoose.Schema(
   {
     title: {
       type: Types.String,
-      required: true,
+      required: true
     },
-    desc: {
+    description: {
       type: Types.String,
-      required: true,
+      required: true
     },
     link: {
-      type: [Types.ObjectId],
-      required: false,
-      ref: "Project",
+      type: Types.String,
+      required: false
     },
-    date: {
+    start_date: {
       type: Types.Date,
       required: false,
-      default: new Date(),
+      default: new Date()
     },
-    chip: {
-      type: [Types.ObjectId],
-      required: false,
-      ref: "Chip",
-    },
+    skills: [
+      {
+        type: Types.ObjectId,
+        required: false,
+        ref: "Chip"
+      }
+    ],
+    status: {
+      type: Types.String,
+      required: true
+    }
   },
   { timestamps: true, collection: "project" }
 );
