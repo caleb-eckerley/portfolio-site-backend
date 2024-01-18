@@ -20,7 +20,7 @@ const work_S = new mongoose.Schema(
       type: Types.Date,
       required: false
     },
-    chips: [
+    skills: [
       {
         type: Types.ObjectId,
         required: false,
