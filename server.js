@@ -34,6 +34,8 @@ app.use("/chips", require("./routes/chipRoutes.js"));
 
 app.use("/work", require("./routes/workRoutes.js"));
 
+app.use("/about", require("./routes/aboutRoutes.js"));
+
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("json")) {
