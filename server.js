@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const app = express();
+const helmet = require("helmet");
 
 const { mongoClient, serverApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
@@ -20,6 +21,7 @@ const PORT = process.env.OUT_PORT;
 
 connectDB();
 
+app.use(helmet());
 app.use(eventLogger);
 app.use(cors(corsOptions));
 app.use(express.json());
